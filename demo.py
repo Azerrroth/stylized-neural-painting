@@ -14,7 +14,7 @@ parser.add_argument('--canvas_color', type=str, default='black', metavar='str',
                     help='canvas_color: [black, white] (default black)')
 parser.add_argument('--canvas_size', type=int, default=512, metavar='str',
                     help='size of the canvas for stroke rendering')
-parser.add_argument('--keep_aspect_ratio', action='store_true', default=False,
+parser.add_argument('--keep_aspect_ratio', action='store_true', default=True,
                     help='keep input aspect ratio when saving outputs')
 parser.add_argument('--max_m_strokes', type=int, default=500, metavar='str',
                     help='max number of strokes (default 500)')
@@ -94,10 +94,14 @@ def optimize_x(pt):
     v_n = pt._shuffle_strokes_and_reshape(v_n)
     final_rendered_image = pt._render(v_n, save_jpgs=True, save_video=True)
 
+    return final_rendered_image
 
 
 if __name__ == '__main__':
 
     pt = Painter(args=args)
-    optimize_x(pt)
+    final_rendered_image = optimize_x(pt)
 
+
+    plt.imshow(final_rendered_image), plt.title('generated')
+    plt.show()
